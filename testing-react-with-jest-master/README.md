@@ -1,7 +1,6 @@
-# Code/repo cloned from: https://github.com/sitepoint-editors/testing-react-with-jest
+### ** Code/repo cloned from: https://github.com/sitepoint-editors/testing-react-with-jest **
 
-Original readme.md follows:
-
+***See original readme.md below...***
 
 # How to Test React Components Using Jest
 
