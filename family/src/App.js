@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import FormExampleCaptureValues from './form.js';
+import FormExampleCaptureValues from './FormExampleCaptureValues.js';
 
 class App extends Component {
   render() {
