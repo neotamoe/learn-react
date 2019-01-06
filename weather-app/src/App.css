@@ -1,0 +1,20 @@
+.header {
+  text-align: center;
+}
+
+.day {
+  border: solid 1px grey;
+  display: inline-block;
+}
+
+.day > p {
+  margin: 20px;
+}
+
+.days {
+  text-align: center;
+}
+
+img {
+  width: 50px;
+}
