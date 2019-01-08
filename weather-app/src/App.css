@@ -18,3 +18,15 @@
 img {
   width: 50px;
 }
+
+.lineup {
+  display: inline-block;
+}
+
+input, button {
+  margin-left: 10px;
+}
+
+span {
+  margin-left: 10px;
+}
