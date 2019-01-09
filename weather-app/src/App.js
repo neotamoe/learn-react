@@ -16,7 +16,10 @@ class App extends Component {
     e.preventDefault();
     console.log('The button was clicked.');
     console.log('current city: '+ this.state.city);
-    axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=Minneapolis,us&units=imperial&mode=json&appid=${key}`).then(response => {
+    axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${this.state.city},us&units=imperial&mode=json&appid=${key}`).then((response) => {
+      this.setState((prevState, props) => {
+        return {showDays: !prevState.showDays}
+      });
       console.log(response);
     })
   }
@@ -35,7 +38,7 @@ class App extends Component {
             <Input labelName="City" value="" placeholder="Enter a City" handleInputChange={this.handleInputChange}/> 
             <Button type="submit" handleSubmit={this.handleSubmit} buttonText="Get Weather"></Button>
           </form>
-          {this.showDays ? 
+          {this.state.showDays ? 
             <div className="days">
               <Day></Day>
               <Day></Day>
