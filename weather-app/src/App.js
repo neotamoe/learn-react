@@ -10,6 +10,7 @@ class App extends Component {
   state = {
     city: null,
     showDays: false,
+    days: []
   }
  
   handleSubmit = (e) => {
@@ -18,9 +19,12 @@ class App extends Component {
     console.log('current city: '+ this.state.city);
     axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${this.state.city},us&units=imperial&mode=json&appid=${key}`).then((response) => {
       this.setState((prevState, props) => {
-        return {showDays: !prevState.showDays}
+        return {
+          showDays: !prevState.showDays,
+          days: response.data.list
+        }
       });
-      console.log(response);
+      console.log(response.data.list);
     })
   }
 
@@ -31,6 +35,9 @@ class App extends Component {
   }
 
   render() {
+    const forecastDays = this.state.days.map((day) =>
+      <Day key={day.id} temperature={day.main.temp} description={day.weather[0].description}></Day> 
+    );
     return (
       <div className="App">
           <h1 className="header">Let's make a weather app!</h1>
@@ -40,12 +47,8 @@ class App extends Component {
           </form>
           {this.state.showDays ? 
             <div className="days">
-              <Day></Day>
-              <Day></Day>
-              <Day></Day>
-              <Day></Day>
-              <Day></Day>
-            </div>  
+              {forecastDays}
+            </div>
           : null }
       </div>
     );

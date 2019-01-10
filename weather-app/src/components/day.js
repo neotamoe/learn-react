@@ -1,12 +1,12 @@
 import React from 'react';
 import sun from '../images/sun.png';
 
-const day = () => {
+const day = (props) => {
     return (
         <div className="day">
             <img src={sun} alt="sun"></img>
-            <p>80&#176;</p>
-            <p>Sunny</p>
+            <p>{props.temperature}&#176;</p>
+            <p>{props.description}</p>
         </div>
     );
 };
