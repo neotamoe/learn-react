@@ -36,7 +36,7 @@ class App extends Component {
 
   render() {
     const forecastDays = this.state.days.map((day) =>
-      <Day key={day.id} temperature={day.main.temp} description={day.weather[0].description}></Day> 
+      <Day key={day.id} temperature={day.main.temp} description={day.weather[0].description} iconCode={day.weather[0].icon}></Day> 
     );
     return (
       <div className="App">

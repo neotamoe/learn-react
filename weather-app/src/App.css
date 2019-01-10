@@ -7,6 +7,11 @@
   display: inline-block;
 }
 
+.day > img {
+  width: 100px;
+  height: auto;
+}
+
 .day > p {
   margin: 20px;
 }
