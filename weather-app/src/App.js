@@ -42,7 +42,9 @@ class App extends Component {
     .catch(error => {
       console.log(error);
       this.setState({
-        error: true
+        error: true,
+        showDays: false,
+        showCurrent: false,
       })
     }
   )};
