@@ -6,38 +6,46 @@ import Button from './components/button';
 import axios from 'axios';
 import key from './key';
 import Current from './components/current';
+import Error from './components/invalidCityInputError';
 
 class App extends Component {
   state = {
-    city: null,
+    city: '',
     showDays: false,
     days: [],
     showCurrent: false,
-    current: []
+    current: [],
+    error: false
   }
  
   handleSubmit = (e) => {
+    if (!this.canBeSubmitted()) {
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
-    console.log('The button was clicked.');
-    console.log('current city: '+ this.state.city);
     axios.all([
       axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${this.state.city},us&units=imperial&mode=json&appid=${key}` ),
       axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.state.city},us&units=imperial&mode=json&appid=${key}`)
     ])
-    // .then(axios.spread(function (forecast, current) {
     .then(response => this.setState((prevState, props) => {
-      console.log('response0: forecast', response[0].data);
-      console.log('response1: weather', response[1].data);
-      console.log('response[1].data.main', response[1].data.main.temp)
+      // console.log('response0: forecast', response[0].data);
+      // console.log('response1: weather', response[1].data);
       return {
         days: response[0].data.list,
         showDays: !prevState.showDays,
         showCurrent: !prevState.showCurrent,
-        current: response[1].data
+        current: response[1].data,
+        error: false
       }
     }))
-    .catch(error => console.log(error));
-  }
+    .catch(error => {
+      console.log(error);
+      this.setState({
+        error: true
+      })
+    }
+  )};
 
   handleInputChange = (e) => {
     this.setState({
@@ -45,16 +53,22 @@ class App extends Component {
     })
   }
 
+  canBeSubmitted = () => {
+    return this.state.city.length > 0;
+  }
+
   render() {
     const forecastDays = this.state.days.map((day) =>
       <Day key={day.dt_txt} dateTime={day.dt_txt} temperature={day.main.temp} description={day.weather[0].main} iconCode={day.weather[0].icon}></Day> 
     );
+    const isEnabled = this.canBeSubmitted();
     return (
       <div className="App">
           <h1 className="header">Let's make a weather app!</h1>
           <form>
-            <Input labelName="City" value="" placeholder="Enter a City" handleInputChange={this.handleInputChange}/> 
-            <Button type="submit" handleSubmit={this.handleSubmit} buttonText="Get Weather"></Button>
+            <Input labelName="City" value={this.state.city} placeholder="Enter a City" handleInputChange={this.handleInputChange}/> 
+            <Button type="submit" handleSubmit={this.handleSubmit} disabled={!isEnabled} buttonText="Get Weather"></Button>
+            {this.state.error ? <Error /> : null }
           </form>
           <hr style={{margin: '30px'}} />
           {this.state.showCurrent ? 

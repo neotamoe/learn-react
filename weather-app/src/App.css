@@ -46,3 +46,8 @@ span {
   width: 100px;
   height: auto;
 }
+
+.error {
+  margin-left: 20px;
+  color: red;
+}
