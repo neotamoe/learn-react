@@ -7,6 +7,8 @@ import axios from 'axios';
 import key from './key';
 import Current from './components/current';
 import Error from './components/invalidCityInputError';
+import moment from 'moment';
+
 
 class App extends Component {
   state = {
@@ -61,7 +63,13 @@ class App extends Component {
 
   render() {
     const forecastDays = this.state.days.map((day) =>
-      <Day key={day.dt_txt} dateTime={day.dt_txt} temperature={day.main.temp} description={day.weather[0].main} iconCode={day.weather[0].icon}></Day> 
+      <Day 
+        key={day.dt_txt} 
+        dateTime={moment.unix(day.dt).format('MMMM DD, YYYY h:mm A')}
+        temperature={day.main.temp} 
+        description={day.weather[0].main} 
+        iconCode={day.weather[0].icon}>
+      </Day> 
     );
     const isEnabled = this.canBeSubmitted();
     return (
