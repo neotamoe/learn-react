@@ -7,7 +7,7 @@ const input = (props) => {
             <span>{props.labelName}:</span>
             <input 
                 type="text"
-                value={props.content}
+                value={props.value}
                 placeholder={props.placeholder} 
                 onChange={props.handleInputChange}
                 id={props.labelName}/>

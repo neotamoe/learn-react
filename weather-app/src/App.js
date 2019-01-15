@@ -38,7 +38,8 @@ class App extends Component {
         showDays: !prevState.showDays,
         showCurrent: !prevState.showCurrent,
         current: response[1].data,
-        error: false
+        error: false,
+        city: ''
       }
     }))
     .catch(error => {
