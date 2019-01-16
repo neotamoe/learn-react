@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import axios from 'axios';
+
 import './App.css';
+import Index from './components/index';
 import Day from './components/day';
+import Current from './components/current';
 import Input from './components/input';
 import Button from './components/button';
-import axios from 'axios';
-import key from './key';
-import Current from './components/current';
 import Error from './components/invalidCityInputError';
-import moment from 'moment';
-
+import key from './key';
 
 class App extends Component {
   state = {
@@ -62,39 +63,36 @@ class App extends Component {
     return this.state.city.length > 0;
   }
 
-  render() {
-    const forecastDays = this.state.days.map((day) =>
-      <Day 
-        key={day.dt_txt} 
-        dateTime={moment.unix(day.dt).format('MMMM DD, YYYY h:mm A')}
-        temperature={day.main.temp} 
-        description={day.weather[0].main} 
-        iconCode={day.weather[0].icon}>
-      </Day> 
-    );
+  render () {
     const isEnabled = this.canBeSubmitted();
+
     return (
-      <div className="App">
-          <h1 className="header">Let's make a weather app!</h1>
-          <form>
-            <Input labelName="City" value={this.state.city} placeholder="Enter a City" handleInputChange={this.handleInputChange}/> 
-            <Button type="submit" handleSubmit={this.handleSubmit} disabled={!isEnabled} buttonText="Get Weather"></Button>
-            {this.state.error ? <Error /> : null }
-          </form>
-          <hr style={{margin: '30px'}} />
-          {this.state.showCurrent ? 
-            <Current 
-              city={this.state.current.name} 
-              temperature={this.state.current.main.temp.toFixed()} 
-              iconCode={this.state.current.weather[0].icon}
-              description={this.state.current.weather[0].main}/> 
-            : null }
-          {this.state.showDays ? 
-            <div className="days">
-              {forecastDays}
-            </div>
-          : null }
-      </div>
+      <Router>
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/current">Current</Link>
+              </li>
+              <li>
+                <Link to="/forecast">Forecast</Link>
+              </li>
+              <li>
+                <Input labelName="City" value={this.state.city} placeholder="Enter a City" handleInputChange={this.handleInputChange}/> 
+                <Button type="submit" handleSubmit={this.handleSubmit} disabled={!isEnabled} buttonText="Get Weather"></Button>
+                {this.state.error ? <Error /> : null }
+              </li>
+            </ul>
+          </nav>
+    
+          <Route path="/" exact component={Index} />
+          <Route path="/current" component={Current} />
+          <Route path="/forecast" component={Day} />
+        </div>
+      </Router>
     );
   }
 }
