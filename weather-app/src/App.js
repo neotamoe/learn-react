@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
+import moment from 'moment';
 
 import './App.css';
 import Index from './components/index';
@@ -66,6 +67,16 @@ class App extends Component {
   render () {
     const isEnabled = this.canBeSubmitted();
 
+    const forecastDays = this.state.days.map((day) =>
+      <Day 
+        key={day.dt_txt} 
+        dateTime={moment.unix(day.dt).format('MMMM DD, YYYY h:mm A')}
+        temperature={day.main.temp} 
+        description={day.weather[0].main} 
+        iconCode={day.weather[0].icon}>
+      </Day> 
+    );
+
     return (
       <Router>
         <div>
@@ -89,8 +100,16 @@ class App extends Component {
           </nav>
     
           <Route path="/" exact component={Index} />
-          <Route path="/current" component={Current} />
-          <Route path="/forecast" component={Day} />
+          <Route path="/current" render={(props) => this.state.showCurrent ? <Current 
+              city={this.state.current.name} 
+              temperature={this.state.current.main.temp.toFixed()} 
+              iconCode={this.state.current.weather[0].icon}
+              description={this.state.current.weather[0].main}/> : null } />
+          <Route path="/forecast" render={(props) => this.state.showDays ? 
+            <div className="days">
+              {forecastDays}
+            </div>
+          : null } />
         </div>
       </Router>
     );

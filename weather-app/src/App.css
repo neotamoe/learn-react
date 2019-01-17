@@ -2,9 +2,13 @@
   text-align: center;
 }
 
-li {
+ul > li {
   display: inline;
   text-decoration: none;
+  margin: 10px;
+}
+
+ol > li {
   margin: 10px;
 }
 
