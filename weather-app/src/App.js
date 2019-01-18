@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
-import moment from 'moment';
 
 import './App.css';
 import Index from './components/index';
-import Day from './components/day';
 import Current from './components/current';
 import Input from './components/input';
 import Button from './components/button';
 import Error from './components/invalidCityInputError';
+import Forecast from './components/forecast';
 import key from './key';
 
 class App extends Component {
@@ -35,10 +34,11 @@ class App extends Component {
     .then(response => this.setState((prevState, props) => {
       // console.log('response0: forecast', response[0].data);
       // console.log('response1: weather', response[1].data);
+      console.log('after axios.get in handleSubmit')
       return {
         days: response[0].data.list,
-        showDays: !prevState.showDays,
-        showCurrent: !prevState.showCurrent,
+        showDays: true,
+        showCurrent: true,
         current: response[1].data,
         error: false,
         city: ''
@@ -66,16 +66,6 @@ class App extends Component {
 
   render () {
     const isEnabled = this.canBeSubmitted();
-
-    const forecastDays = this.state.days.map((day) =>
-      <Day 
-        key={day.dt_txt} 
-        dateTime={moment.unix(day.dt).format('MMMM DD, YYYY h:mm A')}
-        temperature={day.main.temp} 
-        description={day.weather[0].main} 
-        iconCode={day.weather[0].icon}>
-      </Day> 
-    );
 
     return (
       <Router>
@@ -105,11 +95,7 @@ class App extends Component {
               temperature={this.state.current.main.temp.toFixed()} 
               iconCode={this.state.current.weather[0].icon}
               description={this.state.current.weather[0].main}/> : null } />
-          <Route path="/forecast" render={(props) => this.state.showDays ? 
-            <div className="days">
-              {forecastDays}
-            </div>
-          : null } />
+          <Route path="/forecast" render={(props) => <Forecast {...this.state} />} />
         </div>
       </Router>
     );
