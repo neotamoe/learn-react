@@ -61,3 +61,28 @@ span {
   margin-left: 20px;
   color: red;
 }
+
+.Snow {
+  background-color: lightskyblue
+}
+
+.Clouds {
+  background-color: lightgray
+}
+
+.Thunderstorm {
+  background-color: darkgray
+}
+
+.Drizzle {
+  background-color: lightblue
+}
+
+.Rain {
+  background-color: blue
+}
+
+.Clear {
+  background-color: transparent
+
+}

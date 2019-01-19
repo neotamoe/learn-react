@@ -2,7 +2,7 @@ import React from 'react';
 
 const day = (props) => {
     return (
-        <div className="day">
+        <div className={`${props.className} day`}>
             <p>{props.dateTime}</p>
             <img src={`http://openweathermap.org/img/w/${props.iconCode}.png`} alt="icon"></img>
             <h2>{props.temperature.toFixed()}&#176;F</h2>
