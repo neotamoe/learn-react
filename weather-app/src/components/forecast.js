@@ -4,7 +4,33 @@ import moment from 'moment';
 import Day from '../components/day';
 
 const forecast = (props) => {
-    console.log(props);
+    const days = props.days;
+    let displayDaysMap = {};
+    let currentDate = days.length > 0 ? moment.unix(days[0].dt).format("MMM DD, YYYY") : moment(new Date()).format("MMM DD, YYYY");
+
+    function extractDays(days) {
+        for(var i=0; i<days.length; i++){
+            let date = moment.unix(days[i].dt).format('MMMM DD, YYYY')
+            let time = moment.unix(days[i].dt).format('h:mm A')
+            if(moment.unix(days[i].dt).format('MMM DD, YYYY') > currentDate){
+                currentDate = moment.unix(days[i].dt).format('MMM DD, YYYY');
+            }
+            days[i].date = date;
+            days[i].time = time;
+            if(!displayDaysMap[currentDate]){
+                let tempArray = [];
+                tempArray.push(days[i]);
+                displayDaysMap[currentDate] = tempArray;
+            } else {
+                let temp = displayDaysMap[currentDate];
+                temp.push(days[i]);
+                displayDaysMap[currentDate] = temp;
+            }
+        }
+        console.log(displayDaysMap);
+    }
+    let displayDays = extractDays(days);
+
     const forecastDays = props.days.map((day) => {
         return (
             <Day 
