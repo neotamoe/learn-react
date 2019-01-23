@@ -89,13 +89,15 @@ class App extends Component {
             </ul>
           </nav>
     
-          <Route path="/" exact component={Index} />
-          <Route path="/current" render={(props) => this.state.showCurrent ? <Current 
+          <Route path="/" exact component={Index}/>
+          <Route path="/current" render={(props) => this.state.showCurrent ? 
+            <Current 
               city={this.state.current.name} 
               temperature={this.state.current.main.temp.toFixed()} 
               iconCode={this.state.current.weather[0].icon}
-              description={this.state.current.weather[0].main}/> : null } />
-          <Route path="/forecast" render={(props) => <Forecast {...this.state} />} />
+              description={this.state.current.weather[0].main}/> : <Index /> } />
+          <Route path="/forecast" render={(props) => this.state.showDays ?
+            <Forecast {...this.state} /> : <Index /> } />
         </div>
       </Router>
     );
