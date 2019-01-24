@@ -5,8 +5,8 @@ const hour = (props) => {
         <div className={`${props.className} day`}>
             <p>{props.time}</p>
             <img src={`http://openweathermap.org/img/w/${props.iconCode}.png`} alt="icon"></img>
-            <h2>{props.temperature.toFixed()}&#176;F</h2>
-            <p>{props.description}</p>
+            <p><strong>{props.temperature.toFixed()}&#176;F</strong></p>
+            <p style={{fontSize: '10px'}}>{props.description}</p>
         </div>
     );
 };

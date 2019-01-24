@@ -15,24 +15,21 @@ ol > li {
 .day {
   border: solid 1px grey;
   display: inline-block;
+  width: 12%;
+  height: 152px
 }
 
 .day > img {
-  width: 100px;
+  width: 50%;
   height: auto;
 }
 
 .day > p {
-  margin: 20px;
-  width: 150px;
+  margin: 8px;
 }
 
 .days {
   text-align: center;
-}
-
-img {
-  width: 50px;
 }
 
 .lineup {
@@ -53,7 +50,7 @@ span {
 }
 
 .current > img {
-  width: 100px;
+  width: 4%;
   height: auto;
 }
 
@@ -62,6 +59,7 @@ span {
   color: red;
 }
 
+/* background color based on forecast */
 .Snow {
   background-color: lightskyblue
 }
@@ -84,5 +82,4 @@ span {
 
 .Clear {
   background-color: transparent
-
 }
