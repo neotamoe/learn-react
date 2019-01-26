@@ -50,7 +50,7 @@ span {
 }
 
 .current > img {
-  width: 4%;
+  width: 100px;
   height: auto;
 }
 

@@ -89,7 +89,7 @@ class App extends Component {
             </ul>
           </nav>
     
-          <Route path="/" exact component={Index}/>
+          <Route path="/" exact  render={(props) => <Index {...this.state} />} /> 
           <Route path="/current" render={(props) => this.state.showCurrent ? 
             <Current 
               city={this.state.current.name} 
